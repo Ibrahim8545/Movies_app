@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moviesapp/home_screen.dart';
+import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/utils/app_color.dart';
 
 
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
         const Duration(seconds: 1),
         () {
          
-            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+            Navigator.pushReplacementNamed(context, MainHomeScreen.routeName);
          
         },
       );

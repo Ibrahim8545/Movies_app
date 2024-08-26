@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moviesapp/home_screen.dart';
+import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/splash_screen.dart';
 
 void main() {
@@ -13,9 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       routes: {
-        HomeScreen.routeName: (context) => HomeScreen(),
+        MainHomeScreen.routeName: (context) => MainHomeScreen(),
       },
     );
   }
