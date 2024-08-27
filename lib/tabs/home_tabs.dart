@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moviesapp/utils/app_color.dart';
+import 'package:moviesapp/widget/custom_icon_button.dart';
+import 'package:moviesapp/widget/realse_item.dart';
+import 'package:moviesapp/widget/recommended_item.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -16,16 +19,13 @@ class HomeTab extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 60, left: 14),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  
                   children: [
-                    
                     Image.asset('assets/images/imagell.png'),
                     SizedBox(
                       width: 7,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      
                       children: [
                         Text(
                           'Dora and the lost city of gold',
@@ -49,35 +49,50 @@ class HomeTab extends StatelessWidget {
                   ],
                 ),
               ),
-              Positioned(
-                  top: 58,
-                  left: 8,
-                  child: Container(
-                   
-                    decoration: BoxDecoration(
-                          image: DecorationImage(
-                      image: AssetImage('assets/images/Icon awesome-bookmark.png'),
-                      fit: BoxFit.contain
-                    ),
-                    // The background color is set to transparent
-                    color: Colors.transparent,
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )),
+              CustomIconButton(onPressed: () {})
             ],
           ),
           SizedBox(
             height: 20,
           ),
-
           Container(
-            color: AppColor.iconColor,)
+            width: double.infinity,
+            color: AppColor.iconColor,
+            height: 187,
+            padding: EdgeInsets.all(8),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'New Releases',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                   
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => SizedBox(
+                        width: 8,
+                      ),
+                      itemBuilder: (context, index) {
+                        return ReleaseItem();
+                      },
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                ]),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+         RecommendedItem()
+        
         ],
       ),
     );
