@@ -91,10 +91,52 @@ class HomeTab extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-         RecommendedItem()
+          Expanded(
+            child: Container(
+                  color: AppColor.iconColor,
+                  width: double.infinity,
+                  
+            
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+            Text(
+              'Recommended',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+             SizedBox(
+                      height: 5
+                    ),
+                    Expanded(
+                     
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) => SizedBox(
+                          width: 8,
+                        ),
+                        itemBuilder: (context, index) {
+                          return RecommendedItem();
+                        },
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                    ),
+                  ]),
+            ),
+          ),
+          SizedBox(height: 20,)
+         
         
         ],
       ),
     );
+
+      
+      
+  
   }
 }

@@ -7,7 +7,6 @@ class ReleaseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-
         Image.asset('assets/images/realasetest.png',fit: BoxFit.fill,),
         Positioned(
           top: -1,
@@ -16,9 +15,8 @@ class ReleaseItem extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/Icon awesome-bookmark.png'),
-                  fit: BoxFit.contain,),
-                  
-              // The background color is set to transparent
+                  fit: BoxFit.contain,),  
+             
               color: Colors.transparent,
             ),
             child: IconButton(

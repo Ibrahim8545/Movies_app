@@ -8,71 +8,58 @@ class RecommendedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.iconColor,
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      width: 96.87,
+      color: Color(0xff343534),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+       // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Recommended',
+          ReleaseItem(), 
+          Row(
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {},
+                icon: Icon(
+                  Icons.star,
+                  color: Colors.deepOrange,
+                  size: 15,
+                ),
+              ),
+              Text(
+                '7.7',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+         Container(
+          child: Column(
+            children: [
+               Text(
+            'Deadpool 2',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
-              fontWeight: FontWeight.w400,
             ),
           ),
-          SizedBox(height: 5),
-          Container(
-            width: 96.87,
-            color: Color(0xff343534),
-           
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ReleaseItem(),
-                SizedBox(height: 8), // Space between items
-                Row(
-                 
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.star,
-                        color: Colors.deepOrange,
-                        size: 20,
-                      ),
-                    ),
-                    Text(
-                      '7.7',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  'Deadpool 2',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  '2018  R  1h 59m',
-                  style: TextStyle(
-                    color: Color(0xffB5B4B4),
-                    fontSize: 8,
-                  ),
-                ),
-                SizedBox(height: 8),
-              ],
+         
+          Text(
+            '2018  R  1h 59m',
+            style: TextStyle(
+              color: Color(0xffB5B4B4),
+              fontSize: 8,
             ),
           ),
+            ],
+          ),
+         ),
+          SizedBox(height: 0),
         ],
       ),
     );
+    
+    
   }
 }
