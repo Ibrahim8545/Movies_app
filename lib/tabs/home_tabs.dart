@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/utils/app_color.dart';
 import 'package:moviesapp/widget/custom_icon_button.dart';
 import 'package:moviesapp/widget/realse_item.dart';
@@ -55,62 +56,27 @@ class HomeTab extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Container(
-            width: double.infinity,
-            color: AppColor.iconColor,
-            height: 187,
-            padding: EdgeInsets.all(8),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'New Releases',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Expanded(
-                   
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) => SizedBox(
-                        width: 8,
-                      ),
-                      itemBuilder: (context, index) {
-                        return ReleaseItem();
-                      },
-                      itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                    ),
-                  ),
-                ]),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, ScreenDetails.routeName);
+            },
             child: Container(
-                  color: AppColor.iconColor,
-                  width: double.infinity,
-                  
-            
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-            Text(
-              'Recommended',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-             SizedBox(
-                      height: 5
+              width: double.infinity,
+              color: AppColor.iconColor,
+              height: 187,
+              padding: EdgeInsets.all(8),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'New Releases',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     Expanded(
                      
@@ -119,13 +85,56 @@ class HomeTab extends StatelessWidget {
                           width: 8,
                         ),
                         itemBuilder: (context, index) {
-                          return RecommendedItem();
+                          return ReleaseItem();
                         },
                         itemCount: 10,
                         scrollDirection: Axis.horizontal,
                       ),
                     ),
                   ]),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: (){
+                 Navigator.pushNamed(context, ScreenDetails.routeName);
+              },
+              child: Container(
+                    color: AppColor.iconColor,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+              Text(
+                'Recommended',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+               SizedBox(
+                        height: 5
+                      ),
+                      Expanded(
+                       
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 8,
+                          ),
+                          itemBuilder: (context, index) {
+                            return RecommendedItem();
+                          },
+                          itemCount: 10,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ),
+                    ]),
+              ),
             ),
           ),
           SizedBox(height: 20,)
