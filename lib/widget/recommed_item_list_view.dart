@@ -3,8 +3,8 @@ import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/utils/app_color.dart';
 import 'package:moviesapp/widget/recommended_item.dart';
 
-class RecommenedItem extends StatelessWidget {
-  const RecommenedItem({super.key});
+class RecommenedItemListView extends StatelessWidget {
+  const RecommenedItemListView({super.key});
 
   @override
   Widget build(BuildContext context) {

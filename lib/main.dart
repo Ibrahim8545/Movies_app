@@ -10,7 +10,7 @@ void main() {
   //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
   //           statusBarColor: Colors.blue, 
   //     )); 
-  //print(ApiManger.getTopSection());
+ 
   runApp(const MyApp());
 }
 

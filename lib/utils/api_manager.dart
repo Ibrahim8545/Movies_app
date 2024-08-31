@@ -6,13 +6,14 @@ class ApiManger
 {
  static Future<TopSectionHomeScreenModel>getTopSection()async
  {
+  // api.themoviedb.org/3/movie/popular?language=en-US&page=1
    Uri url=Uri.https(
-    'api.themoviedb.org/',
-    '/3/movie/popular?language=en-US&page=100');
-
+    'api.themoviedb.org',
+    '/3/movie/popular?language=en-US&page=100'
+    );
     http.Response response=await http.get(url);
     var json=jsonDecode(response.body);
-
+print(response.body);
     TopSectionHomeScreenModel topSectionmodel=TopSectionHomeScreenModel.fromJson(json);
   return topSectionmodel; 
   
