@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/splash_screen.dart';
+import 'package:moviesapp/utils/api_manager.dart';
 import 'package:moviesapp/utils/app_color.dart';
 
 void main() {
-   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
-            statusBarColor: Colors.blue, 
-      )); 
+  //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
+  //           statusBarColor: Colors.blue, 
+  //     )); 
+  //print(ApiManger.getTopSection());
   runApp(const MyApp());
 }
 

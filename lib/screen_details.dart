@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moviesapp/utils/app_color.dart';
 import 'package:moviesapp/utils/styles.dart';
+import 'package:moviesapp/widget/recommended_item.dart';
+import 'package:moviesapp/widget/type_of_film_container.dart';
 
 class ScreenDetails extends StatelessWidget {
   static const routeName = '/screen_details';
@@ -40,7 +42,8 @@ class ScreenDetails extends StatelessWidget {
                   ),
                   Text(
                     '2019  PG-13  2h 7m',
-                    style: Styles.textStyle14.copyWith(color: Color(0xffB5B4B4)),
+                    style:
+                        Styles.textStyle14.copyWith(color: Color(0xffB5B4B4)),
                   ),
                   SizedBox(height: 8),
                   Row(
@@ -57,10 +60,24 @@ class ScreenDetails extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Wrap(
+                              spacing: 5.0, // Horizontal space between children
+                              runSpacing: 5.0,
+                              children: [
+                                TypeOfFilm(text: 'Action'),
+                                TypeOfFilm(text: 'Action'),
+                                TypeOfFilm(text: 'Action'),
+                                TypeOfFilm(text: 'Action'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               'Having spent most of her life exploring the jungle, nothing could prepare Dora for her most dangerous adventure yet — high school.',
-                              style: Styles.textStyle16,
-                              textAlign: TextAlign.justify, // Optional: Align text justify
+                              style: Styles.textStyle14,
+                              textAlign: TextAlign
+                                  .justify, // Optional: Align text justify
                             ),
                           ],
                         ),
@@ -70,6 +87,48 @@ class ScreenDetails extends StatelessWidget {
                 ],
               ),
             ),
+            Expanded(
+            child: InkWell(
+              onTap: (){
+                 Navigator.pushNamed(context, ScreenDetails.routeName);
+              },
+              child: Container(
+                    color: AppColor.iconColor,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+              Text(
+                'Recommended',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+               SizedBox(
+                        height: 5
+                      ),
+                      Expanded(
+                       
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 8,
+                          ),
+                          itemBuilder: (context, index) {
+                            return RecommendedItem();
+                          },
+                          itemCount: 10,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ),
+                    ]),
+              ),
+            ),
+          ),
+          
+
           ],
         ),
       ),
