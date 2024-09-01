@@ -117,7 +117,7 @@ class ScreenDetails extends StatelessWidget {
                             width: 8,
                           ),
                           itemBuilder: (context, index) {
-                            return RecommendedItem();
+                            return  Text('hi');
                           },
                           itemCount: 10,
                           scrollDirection: Axis.horizontal,

@@ -1,12 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapp/utils/app_color.dart';
-import 'package:moviesapp/widget/realse_item.dart';
+import 'package:moviesapp/models/new_release_model.dart';
+
 
 class RecommendedItem extends StatelessWidget {
-  const RecommendedItem({super.key});
-
+   RecommendedItem({ required this.results,super.key});
+Results results;
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 96.87,
       color: Color(0xff343534),
@@ -17,7 +19,11 @@ class RecommendedItem extends StatelessWidget {
            Stack(
     
       children: [
-        Image.asset('assets/images/imagell.png',fit: BoxFit.fill,),
+         CachedNetworkImage(
+                  imageUrl:
+                      "https://image.tmdb.org/t/p/original/${results.posterPath}" ??
+                          '',
+                 ),
         Positioned(
           top: -1,
           left: -6,
@@ -52,7 +58,7 @@ class RecommendedItem extends StatelessWidget {
                   size: 10,
                 ),
                 Text(
-                  '7.7',
+                  results.voteAverage.toString(),
                   style: TextStyle(
                     fontSize: 10,
                     color: Colors.white,
@@ -69,14 +75,14 @@ class RecommendedItem extends StatelessWidget {
            child: Column(
             children: [
                Text(
-              'Deadpool 2',
+              results.title??'',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 14,
+                fontSize: 10,
               ),
             ),
             Text(
-              '2018  R  1h 59m',
+              results.releaseDate??'',
               style: TextStyle(
                 color: Color(0xffB5B4B4),
                 fontSize: 8,

@@ -37,4 +37,19 @@ print(response.body);
     NewRealseModel newRealseModel=NewRealseModel.fromJson(json);
     return newRealseModel;
    }
+ static Future<NewRealseModel> getRecommendeds()async
+   {
+    Uri url=Uri.https(
+      'api.themoviedb.org',
+      '3/movie/top_rated',
+      {'api_key':'c090e316f95f6ded0c7c53ce03afd5d0'}
+    );
+    http.Response response=await http.get(url);
+    var json=jsonDecode(response.body);
+    print(response.body);
+    NewRealseModel newRecommededModel=NewRealseModel.fromJson(json);
+    return newRecommededModel;
+   }
+
+   //https://api.themoviedb.org/?language=en-US&page=1
 }
