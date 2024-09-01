@@ -1,13 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:moviesapp/models/new_release_model.dart';
 
 class ReleaseItem extends StatelessWidget {
-  const ReleaseItem({super.key});
-
+   ReleaseItem({required this.results, super.key});
+Results results;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset('assets/images/realasetest.png',fit: BoxFit.fill,),
+        CachedNetworkImage(
+                  imageUrl:
+                      "https://image.tmdb.org/t/p/original/${results.posterPath}" ??
+                          '',
+                 ),
         Positioned(
           top: -1,
           left: -6,
