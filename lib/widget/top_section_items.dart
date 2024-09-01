@@ -19,7 +19,8 @@ class TopSectioScreen extends StatelessWidget {
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+     
             children: [
               CachedNetworkImage(
                   imageUrl:
@@ -27,7 +28,8 @@ class TopSectioScreen extends StatelessWidget {
                           ''),
               SizedBox(width: 7),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                
                 children: [
                   Text(
                     result.title ?? '',
