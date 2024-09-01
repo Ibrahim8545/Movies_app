@@ -1,142 +1,59 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapp/utils/app_color.dart';
-import 'package:moviesapp/widget/custom_icon_button.dart';
-import 'package:moviesapp/widget/realse_item.dart';
-import 'package:moviesapp/widget/recommended_item.dart';
+import 'package:moviesapp/models/top_section_home_screen_model.dart'; // Ensure this path is correct
+import 'package:moviesapp/utils/api_manager.dart'; // Fixed the typo in 'ApiManager'
+import 'package:moviesapp/widget/new_realse_item.dart'; // Ensure this path is correct
+import 'package:moviesapp/widget/recommed_item_list_view.dart'; // Fixed typo in 'recommended'
+import 'package:moviesapp/widget/top_section_items.dart'; // Ensure this path is correct
+import 'package:moviesapp/widget/recommended_item.dart'; // Ensure this path is correct
 
 class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
+  HomeTab({super.key});
+
+  List<Results> res = [];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
-          Stack(
-            children: [
-              Image.asset('assets/images/Image.png'),
-              Container(
-                padding: const EdgeInsets.only(top: 60, left: 14),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Image.asset('assets/images/imagell.png'),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Dora and the lost city of gold',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          '2019  PG-13  2h 7m',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              CustomIconButton(onPressed: () {})
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: double.infinity,
-            color: AppColor.iconColor,
-            height: 187,
-            padding: EdgeInsets.all(8),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'New Releases',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
+          FutureBuilder<TopSectionHomeScreenModel>(
+            future: ApiManger.getTopSection(), // Ensure correct method name
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data?.results == null) {
+                return Center(child: Text('No data available'));
+              } else {
+                res = snapshot.data!.results ?? [];
+
+                return CarouselSlider.builder(
+                  itemCount: res.length,
+                  itemBuilder: (context, index, pageViewIndex) { 
+                    return TopSectioScreen(
+                      result: res[index],
+                    );
+                  },
+                  options: CarouselOptions(
+                    height: 250,
+                    autoPlay: true,
+                    viewportFraction: 1,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    autoPlayAnimationDuration: const Duration(seconds: 2),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Expanded(
-                   
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) => SizedBox(
-                        width: 8,
-                      ),
-                      itemBuilder: (context, index) {
-                        return ReleaseItem();
-                      },
-                      itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                    ),
-                  ),
-                ]),
+                );
+              }
+            },
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: Container(
-                  color: AppColor.iconColor,
-                  width: double.infinity,
-                  
-            
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-            Text(
-              'Recommended',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-             SizedBox(
-                      height: 5
-                    ),
-                    Expanded(
-                     
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) => SizedBox(
-                          width: 8,
-                        ),
-                        itemBuilder: (context, index) {
-                          return RecommendedItem();
-                        },
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                      ),
-                    ),
-                  ]),
-            ),
-          ),
-          SizedBox(height: 20,)
-         
-        
+          SizedBox(height: 20),
+          NewRealseItem(), // Fixed the widget name
+          SizedBox(height: 20),
+          RecommenedItemListView(), // Fixed typo in 'recommended'
+          SizedBox(height: 20),
         ],
       ),
     );
-
-      
-      
-  
   }
 }

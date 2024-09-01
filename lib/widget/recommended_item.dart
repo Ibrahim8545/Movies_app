@@ -10,10 +10,12 @@ class RecommendedItem extends StatelessWidget {
     return Container(
       width: 96.87,
       color: Color(0xff343534),
+      padding: EdgeInsets.zero,
       child: Column(
-       // crossAxisAlignment: CrossAxisAlignment.stretch,
+        
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ReleaseItem(), 
+          ReleaseItem(),
           Row(
             children: [
               IconButton(
@@ -34,17 +36,13 @@ class RecommendedItem extends StatelessWidget {
               ),
             ],
           ),
-         Container(
-          child: Column(
-            children: [
-               Text(
+          Text(
             'Deadpool 2',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
             ),
           ),
-         
           Text(
             '2018  R  1h 59m',
             style: TextStyle(
@@ -52,14 +50,9 @@ class RecommendedItem extends StatelessWidget {
               fontSize: 8,
             ),
           ),
-            ],
-          ),
-         ),
-          SizedBox(height: 0),
+          SizedBox(height: 10),
         ],
       ),
     );
-    
-    
   }
 }
