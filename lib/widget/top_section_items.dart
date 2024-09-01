@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapp/models/new_recommend_model.dart';
+import 'package:moviesapp/models/top_section_home_screen_model.dart';
 import 'package:moviesapp/widget/custom_icon_button.dart'; // Ensure this path is correct
 
 class TopSectioScreen extends StatelessWidget {
-  final Results result;
+  Results result;
 
   TopSectioScreen({required this.result, Key? key}) : super(key: key);
 
@@ -11,26 +12,24 @@ class TopSectioScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.network(
-          result.posterPath ?? '', 
-          fit: BoxFit.cover, 
-          height: 250, 
-          width: double.infinity,
-        ),
+        CachedNetworkImage(
+            imageUrl:
+                "https://image.tmdb.org/t/p/original/${result.backdropPath}" ??
+                    ''),
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+     
             children: [
-              Image.network(
-                result.posterPath ?? '', 
-                fit: BoxFit.cover, 
-                height: 150, 
-                width: 100,
-              ),
+              CachedNetworkImage(
+                  imageUrl:
+                      "https://image.tmdb.org/t/p/original/${result.posterPath}" ??
+                          ''),
               SizedBox(width: 7),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                
                 children: [
                   Text(
                     result.title ?? '',
