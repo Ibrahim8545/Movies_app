@@ -38,6 +38,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   http: ^1.2.0
   carousel_slider: ^5.0.0
+  cached_network_image: ^3.3.1
 
 
 dev_dependencies:

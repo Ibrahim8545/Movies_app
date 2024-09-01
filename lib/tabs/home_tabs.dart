@@ -5,7 +5,7 @@ import 'package:moviesapp/utils/api_manager.dart'; // Fixed the typo in 'ApiMana
 import 'package:moviesapp/widget/new_realse_item.dart'; // Ensure this path is correct
 import 'package:moviesapp/widget/recommed_item_list_view.dart'; // Fixed typo in 'recommended'
 import 'package:moviesapp/widget/top_section_items.dart'; // Ensure this path is correct
-import 'package:moviesapp/widget/recommended_item.dart'; // Ensure this path is correct
+ // Ensure this path is correct
 
 class HomeTab extends StatelessWidget {
   HomeTab({super.key});
@@ -47,11 +47,11 @@ class HomeTab extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: 20),
-          NewRealseItem(), // Fixed the widget name
-          SizedBox(height: 20),
-          RecommenedItemListView(), // Fixed typo in 'recommended'
-          SizedBox(height: 20),
+        //   SizedBox(height: 20),
+        //   NewRealseItem(), // Fixed the widget name
+        //   SizedBox(height: 20),
+        //   RecommenedItemListView(), // Fixed typo in 'recommended'
+        //   SizedBox(height: 20),
         ],
       ),
     );
