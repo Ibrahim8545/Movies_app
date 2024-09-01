@@ -15,21 +15,21 @@ class TopSectioScreen extends StatelessWidget {
         CachedNetworkImage(
             imageUrl:
                 "https://image.tmdb.org/t/p/original/${result.backdropPath}" ??
-                    ''),
+                    '',
+                     width: 412),
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
           child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-     
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CachedNetworkImage(
                   imageUrl:
                       "https://image.tmdb.org/t/p/original/${result.posterPath}" ??
-                          ''),
+                          '',
+                 ),
               SizedBox(width: 7),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                
                 children: [
                   Text(
                     result.title ?? '',
