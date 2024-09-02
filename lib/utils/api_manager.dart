@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart'as http;
+import 'package:moviesapp/models/movie_details_model/movie_details_model.dart';
 import 'package:moviesapp/models/new_release_model.dart';
 import 'package:moviesapp/models/top_section_home_screen_model.dart';
 class ApiManger
@@ -51,5 +52,20 @@ print(response.body);
     return newRecommededModel;
    }
 
-   //https://api.themoviedb.org/?language=en-US&page=1
+    static Future<MovieDetailsResponse> getContent(int id) async {
+    var url =
+        Uri.parse('https://api.themoviedb.org/3/movie/$id?language=en-US');
+    var response = await http.get(
+      url,
+      headers: {
+        'Authorization':
+         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMDkwZTMxNmY5NWY2ZGVkMGM3YzUzY2UwM2FmZDVkMCIsIm5iZiI6MTcyNTIxNTQzOC4wMDYxMDIsInN1YiI6IjY2ZDMyOTY0NGQxYzNlNGM4OTk2NWQyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tvZBSR1ofxU0TWuekUIv_2DoLPTmo-91dxH2tZ8bPQ4', 
+   'accept': 'application/json'
+      },
+    );
+    var json = jsonDecode(response.body);
+    var contentData = MovieDetailsResponse.fromJson(json);
+
+    return contentData;
+  }
 }
