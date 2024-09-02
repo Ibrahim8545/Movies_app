@@ -153,7 +153,10 @@ class ScreenDetails extends StatelessWidget {
                                   width: 8,
                                 ),
                                 itemBuilder: (context, index) {
-                                  return MoreLikeTHisList(results: res[index]);
+                                  return MoreLikeTHisList(
+                                    results: res[index],
+                                    movieId: res[index].id!,
+                                  );
                                 },
                                 itemCount: 10,
                                 scrollDirection: Axis.horizontal,

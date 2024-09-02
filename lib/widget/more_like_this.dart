@@ -2,16 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesapp/models/new_release_model.dart';
 import 'package:moviesapp/screen_details.dart';
+import 'package:moviesapp/utils/api_manager.dart';
 
 class MoreLikeTHisList extends StatelessWidget {
-  MoreLikeTHisList({required this.results,super.key});
+  static const routeName = '/more_like_this';
+  MoreLikeTHisList({required this.movieId ,required this.results,super.key});
 Results results;
+final int movieId;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
          onTap: ()async {
-          
-          Navigator.pushNamed(context, ScreenDetails.routeName);
+          var movieDetails = await ApiManger.getContent(movieId);
+          Navigator.pushReplacementNamed(context, ScreenDetails.routeName,arguments: movieDetails);
         },
       child: Container(
         width: 96.87,

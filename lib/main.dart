@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/splash_screen.dart';
-import 'package:moviesapp/utils/api_manager.dart';
-import 'package:moviesapp/utils/app_color.dart';
+
 
 void main() {
   //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
@@ -26,6 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         MainHomeScreen.routeName: (context) => MainHomeScreen(),
         ScreenDetails.routeName: (context) => ScreenDetails(),
+       
       },
     );
   }
