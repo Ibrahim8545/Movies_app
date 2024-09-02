@@ -12,7 +12,7 @@ Results results;
 
     return InkWell(
          onTap: () {
-          Navigator.pushNamed(context, ScreenDetails.routeName);
+          Navigator.pushNamed(context, ScreenDetails.routeName,arguments: results);
         },
       child: Container(
         width: 96.87,
