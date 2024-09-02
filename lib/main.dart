@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         MainHomeScreen.routeName: (context) => MainHomeScreen(),
-        ScreenDetails.routeName: (context) => ScreenDetails(),
+        ScreenDetails.routeName: (context) => ScreenDetails(movie: null,),
        
       },
     );

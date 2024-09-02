@@ -10,7 +10,7 @@ import 'package:moviesapp/widget/type_of_film_container.dart';
 
 class ScreenDetails extends StatelessWidget {
   static const routeName = '/screen_details';
-  ScreenDetails({super.key});
+  ScreenDetails({super.key, required movie});
 
   @override
   Widget build(BuildContext context) {

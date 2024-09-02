@@ -10,7 +10,7 @@ import 'package:moviesapp/widget/top_section_items.dart'; // Ensure this path is
 class HomeTab extends StatelessWidget {
   HomeTab({super.key});
 
-  List<Results> res = [];
+  List<Results>  res = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class HomeTab extends StatelessWidget {
 
                 return CarouselSlider.builder(
                   itemCount: res.length,
-                  itemBuilder: (context, index, pageViewIndex) { 
+                  itemBuilder: (context, index, pageViewIndex) {
                     return TopSectioScreen(
                       result: res[index],
                     );

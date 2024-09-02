@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:moviesapp/screen_details.dart';
+import 'package:moviesapp/utils/api_manager.dart';
+
 class SearchTab extends StatefulWidget {
   @override
   _MovieSearchPageState createState() => _MovieSearchPageState();
 }
 
 class _MovieSearchPageState extends State<SearchTab> {
-  Map<String, dynamic>? movie;
+  List<dynamic> movies = [];
   bool isLoading = false;
-
 
   Future<void> searchMovie(String query) async {
     if (query.isEmpty) {
       setState(() {
-        movie = null;
+        movies = [];
       });
       return;
     }
@@ -38,18 +40,14 @@ class _MovieSearchPageState extends State<SearchTab> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
-        if (data['results'].isNotEmpty) {
-          movie = data['results'][0];
-        } else {
-          movie = null;
-        }
+        movies = data['results'];
         isLoading = false;
       });
     } else {
       setState(() {
         isLoading = false;
       });
-      throw Exception('Failed to load movie');
+      throw Exception('Failed to load movies');
     }
   }
 
@@ -59,14 +57,13 @@ class _MovieSearchPageState extends State<SearchTab> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Search',style: TextStyle(
-            color: Colors.white,
-            fontSize: 30
-        ),),
+        title: Text(
+          'Search',
+          style: TextStyle(color: Colors.white, fontSize: 30),
+        ),
       ),
       body: GestureDetector(
         onTap: () {
-
           FocusScope.of(context).unfocus();
         },
         child: Padding(
@@ -90,35 +87,66 @@ class _MovieSearchPageState extends State<SearchTab> {
                   searchMovie(query);
                 },
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 86),
               isLoading
                   ? Center(child: CircularProgressIndicator())
-                  : movie == null
-                  ? Container()
                   : Expanded(
-                child: Card(
-                  color: Colors.grey[900],
-                  child: ListTile(
-                    leading: movie!['poster_path'] != null
-                        ? Image.network('https://image.tmdb.org/t/p/w500/${movie!['poster_path']}')
-                        : Container(width: 50, color: Colors.grey),
-                    title: Text(
-                      movie!['title'],
-                      style: TextStyle(color: Colors.white),
+                      child: movies.isEmpty
+                          ? Center(
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                      'assets/images/Icon material-local-movies.png'),
+                                  Text('No movies found',
+                                      style: TextStyle(color: Colors.white)),
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: movies.length,
+                              itemBuilder: (context, index) {
+                                final movie = movies[index];
+                                return Card(
+                                  color: Colors.grey[900],
+                                  child: InkWell(
+                                    onTap: () async {
+                                      var movieDetails =
+                                          await ApiManger.getContent(
+                                              movie['id']);
+                                      Navigator.pushNamed(
+                                        context,
+                                        ScreenDetails.routeName,
+                                        arguments: movieDetails,
+                                      );
+                                    },
+                                    child: ListTile(
+                                      leading: movie['poster_path'] != null
+                                          ? Image.network(
+                                              'https://image.tmdb.org/t/p/w500/${movie['poster_path']}')
+                                          : Container(
+                                              width: 50,
+                                              color: Colors.grey,
+                                            ),
+                                      title: Text(
+                                        movie['title'],
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      subtitle: Text(
+                                        movie['release_date'] != null
+                                            ? movie['release_date']
+                                                .substring(0, 4)
+                                            : 'Unknown',
+                                        style: TextStyle(color: Colors.white70),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                     ),
-                    subtitle: Text(
-                      movie!['release_date'] != null
-                          ? movie!['release_date'].substring(0, 4)
-                          : 'Unknown',
-                      style: TextStyle(color: Colors.white70),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
-
       ),
     );
   }
