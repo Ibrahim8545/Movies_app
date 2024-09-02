@@ -45,6 +45,7 @@ class NewRealseItem extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ReleaseItem(
                   results: res[index],
+                  movieId: res[index].id!,
                 );
               },
               itemCount:res.length,

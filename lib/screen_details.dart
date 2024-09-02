@@ -9,10 +9,11 @@ import 'package:moviesapp/widget/type_of_film_container.dart';
 class ScreenDetails extends StatelessWidget {
   static const routeName = '/screen_details';
    ScreenDetails({super.key});
-MovieDetailsResponse? movieDetailsResponse;
+
   @override
   Widget build(BuildContext context) {
-    var modal=ModalRoute.of(context)!.settings.arguments as Results;
+     final movieDetails = ModalRoute.of(context)!.settings.arguments as MovieDetailsResponse;
+    //var modal=ModalRoute.of(context)!.settings.arguments as Results;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.primaryColor,
@@ -21,7 +22,7 @@ MovieDetailsResponse? movieDetailsResponse;
           iconTheme: IconThemeData(color: Colors.white, size: 30),
           backgroundColor: AppColor.iconColor,
           title: Text(
-            modal.title ?? '',
+            movieDetails.title ?? '',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -35,7 +36,7 @@ MovieDetailsResponse? movieDetailsResponse;
             SizedBox(height: 5),
             CachedNetworkImage(
             imageUrl:
-                "https://image.tmdb.org/t/p/original/${modal.backdropPath}" ??
+                "https://image.tmdb.org/t/p/original/${movieDetails.backdropPath}" ??
                     '',
                      width: 412),
             Container(
@@ -44,11 +45,11 @@ MovieDetailsResponse? movieDetailsResponse;
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    modal.originalTitle ?? '',
+                    movieDetails.originalTitle ?? '',
                     style: Styles.textStyle18,
                   ),
                   Text(
-                    modal.releaseDate ?? '',
+                    movieDetails.releaseDate ?? '',
                     style:
                         Styles.textStyle14.copyWith(color: Color(0xffB5B4B4)),
                   ),
@@ -58,7 +59,7 @@ MovieDetailsResponse? movieDetailsResponse;
                     children: [
                     CachedNetworkImage(
                   imageUrl:
-                      "https://image.tmdb.org/t/p/original/${modal.posterPath}" ??
+                      "https://image.tmdb.org/t/p/original/${movieDetails.posterPath}" ??
                           '',
                       
                        height: 160,
@@ -69,19 +70,21 @@ MovieDetailsResponse? movieDetailsResponse;
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Wrap(
-                            //   spacing: 5.0, // Horizontal space between children
-                            //   runSpacing: 5.0,
-                            //   children: [
-                            //     TypeOfFilm(text: movieDetailsResponse?.genres![0].name ?? 'no generes'),
+                            Wrap(
+                              spacing: 5.0, // Horizontal space between children
+                              runSpacing: 5.0,
+                              children: [
+                                TypeOfFilm(text: movieDetails.genres![0].name ?? 'no generes'),
+                                TypeOfFilm(text: movieDetails.genres![2].name ?? 'no generes'),
+                                TypeOfFilm(text: movieDetails.genres![1].name ?? 'no generes'),
                               
-                            //   ],
-                            // ),
+                              ],
+                            ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
-                              modal.overview ?? '',
+                              movieDetails.overview ?? '',
                               style: Styles.textStyle14.copyWith(fontSize: 14,fontWeight: FontWeight.w300),
                               textAlign: TextAlign
                                   .justify, // Optional: Align text justify
@@ -94,7 +97,7 @@ MovieDetailsResponse? movieDetailsResponse;
                     size: 15,
                   ),
                   Text(
-                    modal.voteAverage.toString(),
+                    movieDetails.voteAverage.toString(),
                     style: TextStyle(
                       fontSize: 15,
                       color: Colors.white,
