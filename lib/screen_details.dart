@@ -74,10 +74,10 @@ class ScreenDetails extends StatelessWidget {
                             Wrap(
                               spacing: 5.0, // Horizontal space between children
                               runSpacing: 5.0,
+
                               children: [
                                 TypeOfFilm(
-                                    text: movieDetails.genres![0].name ??
-                                        'no generes'),
+                                    text: movieDetails.genres![0].name ?? ''),
                               ],
                             ),
                             SizedBox(
@@ -85,6 +85,7 @@ class ScreenDetails extends StatelessWidget {
                             ),
                             Text(
                               movieDetails.overview ?? '',
+                              maxLines: 3,
                               style: Styles.textStyle14.copyWith(
                                   fontSize: 14, fontWeight: FontWeight.w300),
                               textAlign: TextAlign

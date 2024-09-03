@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-
-void main() {
+void main()async {
   //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
   //           statusBarColor: Colors.blue, 
   //     )); 
- 
+ await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
