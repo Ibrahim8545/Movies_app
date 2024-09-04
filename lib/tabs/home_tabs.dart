@@ -8,6 +8,7 @@ import 'package:moviesapp/widget/top_section_items.dart'; // Ensure this path is
  // Ensure this path is correct
 
 class HomeTab extends StatelessWidget {
+  static const String routeName = 'home_tab';
   HomeTab({super.key});
 
   List<Results>  res = [];

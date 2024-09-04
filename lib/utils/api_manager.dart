@@ -18,7 +18,7 @@ class ApiManger
     );
     http.Response response=await http.get(url);
     var json=jsonDecode(response.body);
-print(response.body);
+
     TopSectionHomeScreenModel topSectionmodel=TopSectionHomeScreenModel.fromJson(json);
   return topSectionmodel; 
   
@@ -34,7 +34,7 @@ print(response.body);
     );
     http.Response response=await http.get(url);
     var json=jsonDecode(response.body);
-    print(response.body);
+    
     NewRealseModel newRealseModel=NewRealseModel.fromJson(json);
     return newRealseModel;
    }
@@ -47,7 +47,7 @@ print(response.body);
     );
     http.Response response=await http.get(url);
     var json=jsonDecode(response.body);
-    print(response.body);
+ 
     NewRealseModel newRecommededModel=NewRealseModel.fromJson(json);
     return newRecommededModel;
    }

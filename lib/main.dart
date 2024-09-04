@@ -4,12 +4,14 @@ import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:moviesapp/tabs/home_tabs.dart';
 import 'firebase_options.dart';
 
 void main()async {
   //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
   //           statusBarColor: Colors.blue, 
   //     )); 
+    WidgetsFlutterBinding.ensureInitialized();
  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         MainHomeScreen.routeName: (context) => MainHomeScreen(),
         ScreenDetails.routeName: (context) => ScreenDetails(movie: null,),
-       
+       HomeTab.routeName: (context) => HomeTab(),
       },
     );
   }

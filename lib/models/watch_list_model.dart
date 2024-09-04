@@ -1,30 +1,34 @@
-import 'package:moviesapp/models/new_recommend_model.dart';
+class WatchList {
+  final String id;
+  final String title;
+  final String posterPath;
+  bool isWatchList ;
 
-class WatchListDM {
-  static const String collectionName = 'watched movies';
-  String? id;
-  bool? isWatched;
-  Results ? result;
+  static const String collectionName = 'watch_list';
 
-  WatchListDM({
-    this.id,
-    this.isWatched,
-    this.result,
+  WatchList({
+    this.isWatchList=false,
+    required this.id,
+    required this.title,
+    required this.posterPath,
+    
   });
 
-  WatchListDM.fromJson(dynamic json) {
-    id = json['id'];
-    isWatched = json['isWatched'];
-    result = json['result'] != null ? Results.fromJson(json['result']) : null;
+  factory WatchList.fromJson(Map<String, dynamic> json) {
+    return WatchList(
+      id: json['id'],
+      title: json['title'],
+      posterPath: json['posterPath'],
+      isWatchList: json['isWatchList'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['isWatched'] = isWatched;
-    if (result != null) {
-      map['result'] = result?.toJson();
-    }
-    return map;
+    return {
+      'id': id,
+      'title': title,
+      'posterPath': posterPath,
+      'isWatchList': isWatchList
+    };
   }
 }
