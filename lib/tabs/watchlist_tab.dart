@@ -60,9 +60,8 @@ class WatchListTab extends StatelessWidget {
                                 imageUrl: "https://image.tmdb.org/t/p/original/${movie.posterPath}",
                                 placeholder: (context, url) => CircularProgressIndicator(),
                                 errorWidget: (context, url, error) => Icon(Icons.error),
-                                width: 150,
-                                height: 200,
-                                fit: BoxFit.fill,
+                               height: 200,
+                           
                               ),
                             ),
                             Positioned(
