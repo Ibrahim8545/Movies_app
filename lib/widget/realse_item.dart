@@ -7,16 +7,18 @@ import 'package:moviesapp/utils/api_manager.dart';
 import 'package:moviesapp/utils/firebase_functions.dart';
 
 class ReleaseItem extends StatefulWidget {
-  ReleaseItem({required this.movieId, required this.results, super.key});
-  Results results;
+  ReleaseItem({required this.movieId, required this.results, Key? key})
+      : super(key: key);
+
+  final Results results;
   final int movieId;
 
   @override
-  State<ReleaseItem> createState() => _ReleaseItemState();
+  _ReleaseItemState createState() => _ReleaseItemState();
 }
 
 class _ReleaseItemState extends State<ReleaseItem> {
-bool isAddedToWatchList = false;
+  bool isAddedToWatchList = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,52 +37,62 @@ bool isAddedToWatchList = false;
           ),
           Positioned(
             top: -1,
-            left: -6,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: isAddedToWatchList? AssetImage('assets/images/icondone.png'):  AssetImage('assets/images/Icon awesome-bookmark.png'),
-                  fit: BoxFit.contain,
-                ),
-                color: Colors.transparent,
-              ),
-              child: IconButton(
-                onPressed: () async 
-                {
-                  try {
-                     WatchList watchListDM= WatchList(
-                      id: widget.movieId
-                          .toString(), 
-                      title: widget.results.title!,
-                      posterPath: widget.results.posterPath!,
-                    );
-                  
-
-                    await WatchListDataSource.addMovie(watchListDM).then((value) {
-                      watchListDM.isWatchList = true;
-                      WatchListDataSource.updateStatus(watchListDM);
-                      isAddedToWatchList = true;
-                      setState(() {
-                        
-                      });
-                      
-
+            left: -8,
+            child: InkWell(
+              onTap: () async {
+                WatchList watchListDM = WatchList(
+                  id: widget.movieId.toString(),
+                  title: widget.results.title!,
+                  posterPath: widget.results.posterPath!,
+                );
+                try {
+                  if (isAddedToWatchList) {
+                    // Remove from watch list
+                    //await WatchListDataSource.removeMovie(watchListDM);
+                    setState(() {
+                      isAddedToWatchList = false;
                     });
-
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          content:
-                              Text('${widget.results.title} added to watch list!')),
+                          content: Text(
+                              '${widget.results.title} removed from watch list!')),
                     );
-                  } catch (e) {
+                  } else {
+                    // Add to watch list
+                    await WatchListDataSource.addMovie(watchListDM)
+                        .then((value) {
+                      watchListDM.isWatchList = true;
+                      WatchListDataSource.updateStatus(watchListDM);
+                    });
+                    setState(() {
+                      isAddedToWatchList = true;
+                    });
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to add movie: $e')),
+                      SnackBar(
+                          content: Text(
+                              '${widget.results.title} added to watch list!')),
                     );
                   }
-                },
-                icon: Icon(
-                 isAddedToWatchList ? Icons.done:
-                  Icons.add,
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to update watch list: $e')),
+                  );
+                }
+              },
+              child: Container(
+                height: 34,
+                width: 40,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(isAddedToWatchList
+                        ? 'assets/images/icondone.png'
+                        : 'assets/images/Icon awesome-bookmark.png'),
+                    fit: BoxFit.contain,
+                  ),
+                  color: Colors.transparent,
+                ),
+                child: Icon(
+                  isAddedToWatchList ? Icons.done : Icons.add,
                   color: Colors.white,
                 ),
               ),
