@@ -3,7 +3,6 @@ import 'package:moviesapp/categry_details.dart';
 import 'package:moviesapp/models/movie_details_model/genre_model.dart';
 import 'package:moviesapp/utils/api_categry.dart';
 
-
 class BrowserTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -11,11 +10,10 @@ class BrowserTab extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text('Browse ',style: TextStyle(
-         color: Colors.white,
-         fontSize: 30
-
-        ),),
+        title: Text(
+          'Browse ',
+          style: TextStyle(color: Colors.white, fontSize: 30),
+        ),
       ),
       body: FutureBuilder<List<Genre>>(
         future: ApiService().fetchGenres(),
@@ -40,23 +38,35 @@ class BrowserTab extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GenreDetailPage(genre: genre,),
+                        builder: (context) => GenreDetailPage(
+                          genre: genre,
+                        ),
                       ),
                     );
                   },
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/0e34a5e080e8c915030603ddcdb4eeba.png',
-                       height: 500,
-                          width: 200,
-                      ),
                       Container(
-                        color: Colors.black54,
-                        child: Text(
-                          genre.name,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        height: 70,
+                        margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+                        padding: EdgeInsets.symmetric(vertical: 15),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            genre.name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -70,3 +80,8 @@ class BrowserTab extends StatelessWidget {
     );
   }
 }
+/*Image.asset(
+'assets/images/0e34a5e080e8c915030603ddcdb4eeba.png',
+height: 500,
+width: 200,
+),*/
