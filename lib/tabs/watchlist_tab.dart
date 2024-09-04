@@ -1,10 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapp/tabs/home_tabs.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:moviesapp/models/watch_list_model.dart';
 import 'package:moviesapp/utils/firebase_functions.dart';
-// Import WatchListDataSource
-import 'package:moviesapp/models/watch_list_model.dart'; // Import WatchListDM model
 
 class WatchListTab extends StatelessWidget {
   const WatchListTab({Key? key}) : super(key: key);
@@ -12,22 +9,29 @@ class WatchListTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'WatchList',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: Colors.transparent,
       body: Center(
         child: StreamBuilder<List<WatchList>>(
           stream: WatchListDataSource.getWatchedList(),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<WatchList>> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<WatchList>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
-              return Expanded(
-                child: Center(
-                  child: Text(
-                    snapshot.error?.toString() ?? "",
-                  ),
+              return Center(
+                child: Text(
+                  snapshot.error?.toString() ?? "",
                 ),
               );
             } else {
@@ -40,62 +44,86 @@ class WatchListTab extends StatelessWidget {
                   ),
                 );
               } else {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      WatchList movie = watchList[index];
-                      return ListTile(
+                return ListView.separated(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  itemBuilder: (context, index) {
+                    WatchList movie = watchList[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: ListTile(
                         contentPadding: EdgeInsets.all(8.0),
-                        leading: CachedNetworkImage(
-                          imageUrl:
-                              "https://image.tmdb.org/t/p/original/${movie.posterPath}",
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                        leading: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: CachedNetworkImage(
+                                imageUrl: "https://image.tmdb.org/t/p/original/${movie.posterPath}",
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                                width: 150,
+                                height: 200,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              left:  0,
+                              child: Image.asset(
+                                'assets/images/bookmark.png',
+                                width: 20,
+                                height: 30,
+                              ),
+                            ),
+                          ],
                         ),
                         title: Text(
                           movie.title,
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
+
                         onTap: () {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    content:
-                                        const Text('Remove from watchList??'),
-                                    actions: [
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(
-                                            'Cancel',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          )),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            WatchListDataSource.deleteMovie(
-                                                movie.id.toString());
-                                                  Navigator.pop(context);
+                                content:
+                                const Text('Remove from watchList??'),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style:
+                                        TextStyle(color: Colors.black),
+                                      )),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        WatchListDataSource.deleteMovie(
+                                            movie.id.toString());
+                                        Navigator.pop(context);
 
-                                            SnackBar(
-                                                content: Text(
-                                                    '${movie.title} removed from watch list!'));
-                                          },
-                                          child: Text(
-                                            'Remove',
-                                            style: TextStyle(color: Colors.red),
-                                          )),
-                                    ],
-                                  ));
+                                        SnackBar(
+                                            content: Text(
+                                                '${movie.title} removed from watch list!'));
+                                      },
+                                      child: Text(
+                                        'Remove',
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                ],
+                              ));
                         },
-                      );
-                    },
-                    itemCount: watchList.length,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                    indent: 16,
+                    endIndent: 16,
                   ),
+                  itemCount: watchList.length,
                 );
               }
             }
