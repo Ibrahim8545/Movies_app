@@ -3,6 +3,7 @@ class WatchList {
   final String title;
   final String posterPath;
   bool isWatchList ;
+  final String? releaseDate;
 
   static const String collectionName = 'watch_list';
 
@@ -11,6 +12,7 @@ class WatchList {
     required this.id,
     required this.title,
     required this.posterPath,
+    required this.releaseDate
     
   });
 
@@ -20,6 +22,7 @@ class WatchList {
       title: json['title'],
       posterPath: json['posterPath'],
       isWatchList: json['isWatchList'],
+      releaseDate: json['releaseDate'],
     );
   }
 
@@ -28,7 +31,8 @@ class WatchList {
       'id': id,
       'title': title,
       'posterPath': posterPath,
-      'isWatchList': isWatchList
+      'isWatchList': isWatchList,
+      'releaseDate': releaseDate
     };
   }
 }

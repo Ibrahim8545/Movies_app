@@ -32,6 +32,7 @@ class WatchListTab extends StatelessWidget {
               return Center(
                 child: Text(
                   snapshot.error?.toString() ?? "",
+                  style: TextStyle(color: Colors.white),
                 ),
               );
             } else {
@@ -60,24 +61,20 @@ class WatchListTab extends StatelessWidget {
                                 imageUrl: "https://image.tmdb.org/t/p/original/${movie.posterPath}",
                                 placeholder: (context, url) => CircularProgressIndicator(),
                                 errorWidget: (context, url, error) => Icon(Icons.error),
-                               height: 200,
+                             
                            
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left:  0,
-                              child: Image.asset(
-                                'assets/images/bookmark.png',
-                                width: 20,
-                                height: 30,
-                              ),
-                            ),
+                          
                           ],
                         ),
                         title: Text(
                           movie.title,
                           style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        subtitle: Text(
+                          movie.releaseDate??'' ,
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
 
                         onTap: () {
@@ -98,8 +95,10 @@ class WatchListTab extends StatelessWidget {
                                       )),
                                   ElevatedButton(
                                       onPressed: () {
+                                         movie.isWatchList = false;
                                         WatchListDataSource.deleteMovie(
                                             movie.id.toString());
+                                          
                                         Navigator.pop(context);
 
                                         SnackBar(
@@ -116,12 +115,31 @@ class WatchListTab extends StatelessWidget {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => Divider(
-                    color: Colors.white,
-                    thickness: 1,
-                    indent: 16,
-                    endIndent: 16,
+                  separatorBuilder: (context, index) =>Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Icon(
+                 Icons.movie,
+                  color: Colors.white,
+                  
+                )),
+                Expanded(
+                  flex: 3,
+                  child: Divider(
+                    thickness: 2,
+                   
                   ),
+                ),
+                Expanded(
+                    child: Icon(
+                  Icons.movie,
+                  color: Colors.white,
+              
+                )),
+              ],
+                  ),
+                 
                   itemCount: watchList.length,
                 );
               }

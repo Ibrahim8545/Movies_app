@@ -13,41 +13,51 @@ class SearchTab extends StatefulWidget {
 class _MovieSearchPageState extends State<SearchTab> {
   List<dynamic> movies = [];
   bool isLoading = false;
+  String errorMessage = '';
 
   Future<void> searchMovie(String query) async {
     if (query.isEmpty) {
       setState(() {
         movies = [];
+        errorMessage = '';
       });
       return;
     }
 
     setState(() {
       isLoading = true;
+      errorMessage = '';
     });
 
-    Uri url = Uri.https(
-      'api.themoviedb.org',
-      '/3/search/movie',
-      {
-        'api_key': 'c090e316f95f6ded0c7c53ce03afd5d0',
-        'query': query,
-      },
-    );
+    try {
+      Uri url = Uri.https(
+        'api.themoviedb.org',
+        '/3/search/movie',
+        {
+          'api_key': 'c090e316f95f6ded0c7c53ce03afd5d0',
+          'query': query,
+        },
+      );
 
-    final response = await http.get(url);
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        setState(() {
+          movies = data['results'];
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+          errorMessage = 'Failed to load movies';
+        });
+      }
+    } catch (e) {
       setState(() {
-        movies = data['results'];
         isLoading = false;
+        errorMessage = 'An error occurred';
       });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      throw Exception('Failed to load movies');
     }
   }
 
@@ -87,63 +97,64 @@ class _MovieSearchPageState extends State<SearchTab> {
                   searchMovie(query);
                 },
               ),
-              SizedBox(height: 86),
+              SizedBox(height: 16),
               isLoading
                   ? Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: movies.isEmpty
-                          ? Center(
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                      'assets/images/Icon material-local-movies.png'),
-                                  Text('No movies found',
-                                      style: TextStyle(color: Colors.white)),
-                                ],
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: movies.length,
-                              itemBuilder: (context, index) {
-                                final movie = movies[index];
-                                return Card(
-                                  color: Colors.grey[900],
-                                  child: InkWell(
-                                    onTap: () async {
-                                      var movieDetails =
-                                          await ApiManger.getContent(
-                                              movie['id']);
-                                      Navigator.pushNamed(
-                                        context,
-                                        ScreenDetails.routeName,
-                                        arguments: movieDetails,
-                                      );
-                                    },
-                                    child: ListTile(
-                                      leading: movie['poster_path'] != null
-                                          ? Image.network(
-                                              'https://image.tmdb.org/t/p/w500/${movie['poster_path']}')
-                                          : Container(
-                                              width: 50,
-                                              color: Colors.grey,
-                                            ),
-                                      title: Text(
-                                        movie['title'],
+                  : errorMessage.isNotEmpty
+                      ? Center(
+                          child: Text(
+                            errorMessage,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Expanded(
+                          child: movies.isEmpty
+                              ? Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                          'assets/images/Icon material-local-movies.png'),
+                                      Text(
+                                        'No movies found',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      subtitle: Text(
-                                        movie['release_date'] != null
-                                            ? movie['release_date']
-                                                .substring(0, 4)
-                                            : 'Unknown',
-                                        style: TextStyle(color: Colors.white70),
-                                      ),
-                                    ),
+                                    ],
                                   ),
-                                );
-                              },
-                            ),
-                    ),
+                                )
+                              : ListView.builder(
+                                  itemCount: movies.length,
+                                  itemBuilder: (context, index) {
+                                    final movie = movies[index];
+                                    return Card(
+                                      color: Colors.grey[900],
+                                      child: InkWell(
+                                        onTap: () async {
+                                          var movieDetails = await ApiManger.getContent(movie['id']);
+                                          Navigator.pushNamed(
+                                            context,
+                                            ScreenDetails.routeName,
+                                            arguments: movieDetails,
+                                          );
+                                        },
+                                        child: ListTile(
+                                          leading: movie['poster_path'] != null
+                                              ? Image.network(
+                                                  'https://image.tmdb.org/t/p/w500/${movie['poster_path']}')
+                                              : Container(
+                                                  width: 50,
+                                                  color: Colors.grey,
+                                                ),
+                                          title: Text(
+                                            movie['title'] ?? 'Unknown title',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                        ),
             ],
           ),
         ),

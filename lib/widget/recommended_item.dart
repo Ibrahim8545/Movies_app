@@ -54,7 +54,9 @@ final int movieId;
                    WatchList watchListDM = WatchList(
                   id: movieId.toString(),
                   title: results.title!,
-                  posterPath: results.posterPath!,
+                  posterPath: results.posterPath??'No Photo',
+                  releaseDate: results.releaseDate??''
+
                 );
 
                 try {

@@ -61,6 +61,7 @@ class _GenreDetailPageState extends State<GenreDetailPage> {
                     );
                   },
                   child: Card(
+                    color:Colors.black,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -75,7 +76,7 @@ class _GenreDetailPageState extends State<GenreDetailPage> {
                           child: Text(
                             movie.title,
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold,color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                         ),

@@ -39,6 +39,7 @@ class ReleaseItem extends StatelessWidget {
                   id: movieId.toString(),
                   title: results.title!,
                   posterPath: results.posterPath!,
+                  releaseDate: results.releaseDate!,
                 );
 
                 try {
