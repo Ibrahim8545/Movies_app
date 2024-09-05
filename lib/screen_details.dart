@@ -68,7 +68,7 @@ class ScreenDetails extends StatelessWidget {
                                 '',
                                 placeholder: (context, url) => CircularProgressIndicator(),
                                 errorWidget: (context, url, error) => Image.asset('assets/images/nophoto.png'),
-                        height: 160,
+                        height:120,
                       ),
                       SizedBox(width: 10), // Add spacing between image and text
                       Expanded(

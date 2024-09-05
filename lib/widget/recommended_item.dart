@@ -89,7 +89,7 @@ final int movieId;
         ],
       ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -120,7 +120,9 @@ final int movieId;
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 10,
+                  
                 ),
+                maxLines: 2,
               ),
               Text(
                 results.releaseDate??'',

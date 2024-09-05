@@ -38,7 +38,7 @@ class MoreLikeTHisList extends StatelessWidget {
                       "https://image.tmdb.org/t/p/original/${results.posterPath}" ??
                           'assets/images/imagell.png',
                           placeholder: (context, url) => CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Image.asset('assets/images/nophoto.png'),
+                            errorWidget: (context, url, error) => Image.asset('assets/images/nophoto.png',width: 129,),
                 ),
                 Positioned(
                   top: -1,
@@ -125,6 +125,7 @@ class MoreLikeTHisList extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 10,
                     ),
+                      maxLines: 2,
                   ),
                   Text(
                     results.releaseDate ?? '',
