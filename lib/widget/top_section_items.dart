@@ -18,7 +18,7 @@ class TopSectioScreen extends StatelessWidget {
     ? "https://image.tmdb.org/t/p/original/${result.backdropPath}"
     : 'https://example.com/placeholder.png', 
      placeholder: (context, url) => CircularProgressIndicator(),
-  errorWidget: (context, url, error) => Icon(Icons.error),
+   errorWidget: (context, url, error) => Image.asset('assets/images/nophoto.png'),
     ),
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
@@ -31,7 +31,7 @@ class TopSectioScreen extends StatelessWidget {
     ? "https://image.tmdb.org/t/p/original/${result.posterPath}"
     : 'https://example.com/placeholder.png', // Placeholder URL if imagePath is null
   placeholder: (context, url) => CircularProgressIndicator(),
-  errorWidget: (context, url, error) => Icon(Icons.error),
+ errorWidget: (context, url, error) => Image.asset('assets/images/nophoto.png'),
               ),
               SizedBox(width: 7),
               Column(
