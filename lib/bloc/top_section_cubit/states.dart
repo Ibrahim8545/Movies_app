@@ -10,6 +10,4 @@ class HomeGetTopSectionLError extends HomeState {}
 
 
 
-class HomeGetNewRealseLoading extends HomeState {}
-class HomeGetNewRealseSucess extends HomeState {}
-class HomeGetNewRealseError extends HomeState {}
+

@@ -14,19 +14,24 @@ class TopSectioScreen extends StatelessWidget {
       children: [
         CachedNetworkImage(
             imageUrl:
-                "https://image.tmdb.org/t/p/original/${result.backdropPath}" ??
-                    '',
-                     width: 412),
+                result.backdropPath != null ? "https://image.tmdb.org/t/p/original/${result.backdropPath}" : 'path/to/default/image',
+            placeholder: (context, url) =>
+                CircularProgressIndicator(), // Optional placeholder while loading
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            width: 412),
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CachedNetworkImage(
-                  imageUrl:
-                      "https://image.tmdb.org/t/p/original/${result.posterPath}" ??
-                          '',
-                 ),
+                imageUrl:
+                    "https://image.tmdb.org/t/p/original/${result.posterPath}" ??
+                        'no poster photot',
+                placeholder: (context, url) =>
+                    CircularProgressIndicator(), // Optional placeholder while loading
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
               SizedBox(width: 7),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -53,7 +58,7 @@ class TopSectioScreen extends StatelessWidget {
             ],
           ),
         ),
-        CustomIconButton(onPressed: () {})
+
       ],
     );
   }

@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:moviesapp/bloc/home_cubit.dart';
-import 'package:moviesapp/bloc/states.dart';
+import 'package:moviesapp/bloc/top_section_cubit/home_cubit.dart';
+import 'package:moviesapp/bloc/top_section_cubit/states.dart';
 import 'package:moviesapp/models/top_section_home_screen_model.dart';
 import 'package:moviesapp/utils/api_manager.dart';
 import 'package:moviesapp/widget/top_section_items.dart';
@@ -18,25 +18,16 @@ class TopSectionListview extends StatelessWidget {
         create: (context) => HomeCubit()..getTopSection(),
         child: BlocConsumer<HomeCubit, HomeState>(
           listener: (context, state) {
-             if (state is HomeGetTopSectionLError) {
-                context.loaderOverlay.show();
-              } else {
-                context.loaderOverlay.hide();
-              }
-      
-      
-              if (state is HomeGetTopSectionLError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Something went wrong")));
-              }
-      
-              // if (state is HomeChangeSource) {
-              //   HomeCubit.get(context).getNewsData(HomeCubit.get(context)
-              //           .model
-              //           ?.sources?[HomeCubit.get(context).Selected]
-              //           .id ??
-              //       "");
-              // }
+            if (state is HomeGetTopSectionLError) {
+              context.loaderOverlay.show();
+            } else {
+              context.loaderOverlay.hide();
+            }
+
+            if (state is HomeGetTopSectionLError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Something went wrong")));
+            }
           },
           builder: (context, state) {
             return CarouselSlider.builder(
@@ -48,8 +39,9 @@ class TopSectionListview extends StatelessWidget {
               itemBuilder: (context, index, pageViewIndex) {
                 return TopSectioScreen(
                   result: BlocProvider.of<HomeCubit>(context)
-                      .topSectionHomeScreenModel
-                      !.results![index],
+                          .topSectionHomeScreenModel
+                          ?.results?[index]??Results(),
+                     
                 );
               },
               options: CarouselOptions(

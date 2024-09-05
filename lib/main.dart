@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesapp/bloc/observer.dart';
 
 import 'package:moviesapp/main_home_screen.dart';
 import 'package:moviesapp/screen_details.dart';
@@ -11,6 +13,7 @@ void main()async {
   //  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
   //           statusBarColor: Colors.blue, 
   //     )); 
+  Bloc.observer = MyBlocObserver();
     WidgetsFlutterBinding.ensureInitialized();
  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
