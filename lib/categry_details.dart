@@ -68,6 +68,7 @@ class _GenreDetailPageState extends State<GenreDetailPage> {
                         Expanded(
                           child: Image.network(
                             'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                            
                             fit: BoxFit.cover,
                           ),
                         ),

@@ -41,6 +41,8 @@ class ScreenDetails extends StatelessWidget {
                 imageUrl:
                     "https://image.tmdb.org/t/p/original/${movieDetails.backdropPath}" ??
                         '',
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                 width: 412),
             Container(
               padding: EdgeInsets.all(14),
@@ -64,6 +66,7 @@ class ScreenDetails extends StatelessWidget {
                         imageUrl:
                             "https://image.tmdb.org/t/p/original/${movieDetails.posterPath}" ??
                                 '',
+                                placeholder: (context, url) => CircularProgressIndicator(),
                         height: 160,
                       ),
                       SizedBox(width: 10), // Add spacing between image and text

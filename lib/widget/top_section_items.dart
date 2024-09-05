@@ -16,7 +16,10 @@ class TopSectioScreen extends StatelessWidget {
             imageUrl:
            result.backdropPath != null
     ? "https://image.tmdb.org/t/p/original/${result.backdropPath}"
-    : 'https://example.com/placeholder.png', ),
+    : 'https://example.com/placeholder.png', 
+     placeholder: (context, url) => CircularProgressIndicator(),
+  errorWidget: (context, url, error) => Icon(Icons.error),
+    ),
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
           child: Row(

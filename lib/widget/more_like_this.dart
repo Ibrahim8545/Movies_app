@@ -36,7 +36,9 @@ class MoreLikeTHisList extends StatelessWidget {
                 CachedNetworkImage(
                   imageUrl:
                       "https://image.tmdb.org/t/p/original/${results.posterPath}" ??
-                          '',
+                          'assets/images/imagell.png',
+                          placeholder: (context, url) => CircularProgressIndicator(),
+                           errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 Positioned(
                   top: -1,

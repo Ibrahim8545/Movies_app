@@ -29,6 +29,8 @@ class ReleaseItem extends StatelessWidget {
         children: [
           CachedNetworkImage(
             imageUrl: "https://image.tmdb.org/t/p/original/${results.posterPath}" ?? '',
+             placeholder: (context, url) => CircularProgressIndicator(),
+  errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           Positioned(
             top: -1,
