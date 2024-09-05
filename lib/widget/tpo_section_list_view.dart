@@ -13,81 +13,83 @@ class TopSectionListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoaderOverlay(
-      child: BlocProvider(
-        create: (context) => HomeCubit()..getTopSection(),
-        child: BlocConsumer<HomeCubit, HomeState>(
-          listener: (context, state) {
-            if (state is HomeGetTopSectionLError) {
-              context.loaderOverlay.show();
-            } else {
-              context.loaderOverlay.hide();
-            }
+    return 
+      FutureBuilder<TopSectionHomeScreenModel>(
+              future: ApiManger.getTopSection(), // Ensure correct method name
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data?.results == null) {
+                  return Center(child: Text('No data available'));
+                } else {
 
-            if (state is HomeGetTopSectionLError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Something went wrong")));
-            }
-          },
-          builder: (context, state) {
-            return CarouselSlider.builder(
-              itemCount: BlocProvider.of<HomeCubit>(context)
-                      .topSectionHomeScreenModel
-                      ?.results
-                      ?.length ??
-                  0,
-              itemBuilder: (context, index, pageViewIndex) {
-                return TopSectioScreen(
-                  result: BlocProvider.of<HomeCubit>(context)
-                          .topSectionHomeScreenModel
-                          ?.results?[index]??Results(),
-                     
-                );
+    List<Results>  res = [];
+                  res = snapshot.data!.results ?? [];
+
+                  return CarouselSlider.builder(
+                    itemCount: res.length,
+                    itemBuilder: (context, index, pageViewIndex) {
+                      return TopSectioScreen(
+                        result: res[index],
+                      );
+                    },
+                    options: CarouselOptions(
+                      height: 250,
+                      autoPlay: true,
+                      viewportFraction: 1,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      autoPlayAnimationDuration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
               },
-              options: CarouselOptions(
-                height: 250,
-                autoPlay: true,
-                viewportFraction: 1,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                autoPlayAnimationDuration: const Duration(seconds: 2),
-              ),
             );
-          },
-        ),
-      ),
-    );
-
-    //   FutureBuilder<TopSectionHomeScreenModel>(
-    //           future: ApiManger.getTopSection(), // Ensure correct method name
-    //           builder: (context, snapshot) {
-    //             if (snapshot.connectionState == ConnectionState.waiting) {
-    //               return Center(child: CircularProgressIndicator());
-    //             } else if (snapshot.hasError) {
-    //               return Center(child: Text('Error: ${snapshot.error}'));
-    //             } else if (!snapshot.hasData || snapshot.data?.results == null) {
-    //               return Center(child: Text('No data available'));
-    //             } else {
-
-    // List<Results>  res = [];
-    //               res = snapshot.data!.results ?? [];
-
-    //               return CarouselSlider.builder(
-    //                 itemCount: res.length,
-    //                 itemBuilder: (context, index, pageViewIndex) {
-    //                   return TopSectioScreen(
-    //                     result: res[index],
-    //                   );
-    //                 },
-    //                 options: CarouselOptions(
-    //                   height: 250,
-    //                   autoPlay: true,
-    //                   viewportFraction: 1,
-    //                   autoPlayCurve: Curves.fastOutSlowIn,
-    //                   autoPlayAnimationDuration: const Duration(seconds: 2),
-    //                 ),
-    //               );
-    //             }
-    //           },
-    //         );
   }
 }
+
+
+// LoaderOverlay(
+//       child: BlocProvider(
+//         create: (context) => HomeCubit()..getTopSection(),
+//         child: BlocConsumer<HomeCubit, HomeState>(
+//           listener: (context, state) {
+//             if (state is HomeGetTopSectionLError) {
+//               context.loaderOverlay.show();
+//             } else {
+//               context.loaderOverlay.hide();
+//             }
+
+//             if (state is HomeGetTopSectionLError) {
+//               ScaffoldMessenger.of(context).showSnackBar(
+//                   SnackBar(content: Text("Something went wrong")));
+//             }
+//           },
+//           builder: (context, state) {
+//             return CarouselSlider.builder(
+//               itemCount: BlocProvider.of<HomeCubit>(context)
+//                       .topSectionHomeScreenModel
+//                       ?.results
+//                       ?.length ??
+//                   0,
+//               itemBuilder: (context, index, pageViewIndex) {
+//                 return TopSectioScreen(
+//                   result: BlocProvider.of<HomeCubit>(context)
+//                           .topSectionHomeScreenModel
+//                           ?.results?[index]??Results(),
+                     
+//                 );
+//               },
+//               options: CarouselOptions(
+//                 height: 250,
+//                 autoPlay: true,
+//                 viewportFraction: 1,
+//                 autoPlayCurve: Curves.fastOutSlowIn,
+//                 autoPlayAnimationDuration: const Duration(seconds: 2),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//     );

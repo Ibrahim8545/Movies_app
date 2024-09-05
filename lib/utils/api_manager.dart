@@ -47,7 +47,7 @@ class ApiManger
     );
     http.Response response=await http.get(url);
     var json=jsonDecode(response.body);
- 
+ print(response.body);
     NewRealseModel newRecommededModel=NewRealseModel.fromJson(json);
     return newRecommededModel;
    }

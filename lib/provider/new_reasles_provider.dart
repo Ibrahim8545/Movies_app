@@ -23,7 +23,7 @@ class WatchListProvider extends ChangeNotifier {
 
   Future<void> removeMovie(WatchList movie) async {
     try {
-      //await WatchListDataSource.removeMovie(movie);
+      await WatchListDataSource.deleteMovie(movie.id);
       _watchList.removeWhere((item) => item.id == movie.id);
       notifyListeners();
     } catch (e) {

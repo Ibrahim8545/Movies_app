@@ -14,10 +14,12 @@ class TopSectioScreen extends StatelessWidget {
       children: [
         CachedNetworkImage(
             imageUrl:
-                result.backdropPath != null ? "https://image.tmdb.org/t/p/original/${result.backdropPath}" : 'path/to/default/image',
-            placeholder: (context, url) =>
-                CircularProgressIndicator(), // Optional placeholder while loading
-            errorWidget: (context, url, error) => Icon(Icons.error),
+           result.backdropPath != null
+    ? "https://image.tmdb.org/t/p/original/${result.backdropPath}"
+    : 'https://example.com/placeholder.png', 
+  placeholder: (context, url) => CircularProgressIndicator(),
+  errorWidget: (context, url, error) => Icon(Icons.error), 
+           
             width: 412),
         Container(
           padding: const EdgeInsets.only(top: 60, left: 14),
@@ -26,11 +28,11 @@ class TopSectioScreen extends StatelessWidget {
             children: [
               CachedNetworkImage(
                 imageUrl:
-                    "https://image.tmdb.org/t/p/original/${result.posterPath}" ??
-                        'no poster photot',
-                placeholder: (context, url) =>
-                    CircularProgressIndicator(), // Optional placeholder while loading
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                result.posterPath != null
+    ? "https://image.tmdb.org/t/p/original/${result.posterPath}"
+    : 'https://example.com/placeholder.png', // Placeholder URL if imagePath is null
+  placeholder: (context, url) => CircularProgressIndicator(),
+  errorWidget: (context, url, error) => Icon(Icons.error),
               ),
               SizedBox(width: 7),
               Column(

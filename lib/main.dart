@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviesapp/bloc/observer.dart';
 
 import 'package:moviesapp/main_home_screen.dart';
+import 'package:moviesapp/provider/new_reasles_provider.dart';
 import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:moviesapp/tabs/home_tabs.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main()async {
@@ -18,7 +20,15 @@ void main()async {
  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
-  runApp(const MyApp());
+ runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => WatchListProvider()),
+        // other providers
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

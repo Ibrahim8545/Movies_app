@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:moviesapp/provider/new_reasles_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:moviesapp/models/new_release_model.dart';
 import 'package:moviesapp/models/watch_list_model.dart';
 import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/utils/api_manager.dart';
-import 'package:moviesapp/utils/firebase_functions.dart';
 
-class ReleaseItem extends StatefulWidget {
+
+class ReleaseItem extends StatelessWidget {
   ReleaseItem({required this.movieId, required this.results, Key? key})
       : super(key: key);
 
@@ -14,26 +16,19 @@ class ReleaseItem extends StatefulWidget {
   final int movieId;
 
   @override
-  _ReleaseItemState createState() => _ReleaseItemState();
-}
-
-class _ReleaseItemState extends State<ReleaseItem> {
-  bool isAddedToWatchList = false;
-
-  @override
   Widget build(BuildContext context) {
+    final watchListProvider = Provider.of<WatchListProvider>(context);
+    final isAddedToWatchList = watchListProvider.isMovieInWatchList(movieId.toString());
+
     return InkWell(
       onTap: () async {
-        var movieDetails = await ApiManger.getContent(widget.movieId);
-        Navigator.pushNamed(context, ScreenDetails.routeName,
-            arguments: movieDetails);
+        var movieDetails = await ApiManger.getContent(movieId);
+        Navigator.pushNamed(context, ScreenDetails.routeName, arguments: movieDetails);
       },
       child: Stack(
         children: [
           CachedNetworkImage(
-            imageUrl:
-                "https://image.tmdb.org/t/p/original/${widget.results.posterPath}" ??
-                    '',
+            imageUrl: "https://image.tmdb.org/t/p/original/${results.posterPath}" ?? '',
           ),
           Positioned(
             top: -1,
@@ -41,36 +36,21 @@ class _ReleaseItemState extends State<ReleaseItem> {
             child: InkWell(
               onTap: () async {
                 WatchList watchListDM = WatchList(
-                  id: widget.movieId.toString(),
-                  title: widget.results.title!,
-                  posterPath: widget.results.posterPath!,
+                  id: movieId.toString(),
+                  title: results.title!,
+                  posterPath: results.posterPath!,
                 );
+
                 try {
                   if (isAddedToWatchList) {
-                    // Remove from watch list
-                    //await WatchListDataSource.removeMovie(watchListDM);
-                    setState(() {
-                      isAddedToWatchList = false;
-                    });
+                    await watchListProvider.removeMovie(watchListDM);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text(
-                              '${widget.results.title} removed from watch list!')),
+                      SnackBar(content: Text('${results.title} removed from watch list!')),
                     );
                   } else {
-                    // Add to watch list
-                    await WatchListDataSource.addMovie(watchListDM)
-                        .then((value) {
-                      watchListDM.isWatchList = true;
-                      WatchListDataSource.updateStatus(watchListDM);
-                    });
-                    setState(() {
-                      isAddedToWatchList = true;
-                    });
+                    await watchListProvider.addMovie(watchListDM);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text(
-                              '${widget.results.title} added to watch list!')),
+                      SnackBar(content: Text('${results.title} added to watch list!')),
                     );
                   }
                 } catch (e) {
@@ -97,7 +77,7 @@ class _ReleaseItemState extends State<ReleaseItem> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
