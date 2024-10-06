@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moviesapp/categry_details.dart';
+import 'package:moviesapp/widget/categry_details.dart';
 import 'package:moviesapp/models/movie_details_model/genre_model.dart';
 import 'package:moviesapp/utils/api_categry.dart';
 

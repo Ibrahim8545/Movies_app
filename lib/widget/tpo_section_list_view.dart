@@ -13,39 +13,37 @@ class TopSectionListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-      FutureBuilder<TopSectionHomeScreenModel>(
-              future: ApiManger.getTopSection(), // Ensure correct method name
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData || snapshot.data?.results == null) {
-                  return Center(child: Text('No data available'));
-                } else {
+    return FutureBuilder<TopSectionHomeScreenModel>(
+      future: ApiManger.getTopSection(), // Ensure correct method name
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data?.results == null) {
+          return Center(child: Text('No data available'));
+        } else {
+          List<Results> res = [];
+          res = snapshot.data!.results ?? [];
 
-    List<Results>  res = [];
-                  res = snapshot.data!.results ?? [];
-
-                  return CarouselSlider.builder(
-                    itemCount: res.length,
-                    itemBuilder: (context, index, pageViewIndex) {
-                      return TopSectioScreen(
-                        result: res[index],
-                      );
-                    },
-                    options: CarouselOptions(
-                      height: 250,
-                      autoPlay: true,
-                      viewportFraction: 1,
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      autoPlayAnimationDuration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
-              },
-            );
+          return CarouselSlider.builder(
+            itemCount: res.length,
+            itemBuilder: (context, index, pageViewIndex) {
+              return TopSectioScreen(
+                result: res[index],
+              );
+            },
+            options: CarouselOptions(
+              height: 250,
+              autoPlay: true,
+              viewportFraction: 1,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              autoPlayAnimationDuration: const Duration(seconds: 2),
+            ),
+          );
+        }
+      },
+    );
   }
 }
 
