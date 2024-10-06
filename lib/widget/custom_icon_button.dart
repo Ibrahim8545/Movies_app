@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-  CustomIconButton({required this.onPressed,super.key});
-void Function()? onPressed;
-int left=0;
-int top=0;
-int right=0;
-int bottom=0;
+  CustomIconButton({required this.onPressed, super.key});
+  void Function()? onPressed;
+  int left = 0;
+  int top = 0;
+  int right = 0;
+  int bottom = 0;
 
   @override
   Widget build(BuildContext context) {
