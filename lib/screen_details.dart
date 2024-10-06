@@ -81,7 +81,7 @@ class ScreenDetails extends StatelessWidget {
 
                               children: [
                                 TypeOfFilm(
-                                    text: movieDetails.genres![0].name ?? ''),
+                                    text: movieDetails.genres?[0].name ?? 'Nogeners'),
                               ],
                             ),
                             SizedBox(

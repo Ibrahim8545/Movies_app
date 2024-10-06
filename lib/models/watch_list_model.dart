@@ -1,9 +1,15 @@
+import 'package:moviesapp/models/movie_details_model/generes_model.dart';
+
 class WatchList {
   final String id;
   final String title;
   final String posterPath;
   bool isWatchList ;
-  final String? releaseDate;
+  String? releaseDate;
+  //   double? voteAverage;
+  // int? voteCount;
+  //  List<Genres>? genres;
+  //  String? backdropPath;
 
   static const String collectionName = 'watch_list';
 
@@ -12,7 +18,11 @@ class WatchList {
     required this.id,
     required this.title,
     required this.posterPath,
-    required this.releaseDate
+    required this.releaseDate,
+    // required this voteAverage,
+    // required this.voteCount,
+    // required this.genres,
+    // required this.backdropPath
     
   });
 

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:moviesapp/models/movie_details_model/movie_details_model.dart';
+import 'package:moviesapp/models/new_release_model.dart';
 import 'package:moviesapp/models/watch_list_model.dart';
+import 'package:moviesapp/screen_details.dart';
 import 'package:moviesapp/utils/firebase_functions.dart';
 
 class WatchListTab extends StatelessWidget {
-  const WatchListTab({Key? key}) : super(key: key);
+  static const routeName = '/watchlist-tab';
+WatchListTab({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+    WatchList movie;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,7 +54,7 @@ class WatchListTab extends StatelessWidget {
                 return ListView.separated(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   itemBuilder: (context, index) {
-                    WatchList movie = watchList[index];
+                     movie = watchList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                       child: ListTile(
@@ -76,8 +82,7 @@ class WatchListTab extends StatelessWidget {
                           movie.releaseDate??'' ,
                           style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
-
-                        onTap: () {
+                        onLongPress: () {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
@@ -111,6 +116,23 @@ class WatchListTab extends StatelessWidget {
                                       )),
                                 ],
                               ));
+                        },
+
+                        onTap: () {
+                          int x=int.parse(movie.id.toString());
+                         Navigator.pushNamed(
+    context,
+    ScreenDetails.routeName,
+    arguments:MovieDetailsResponse(
+    id: x,
+    title: movie.title,
+   posterPath: movie.posterPath,
+   releaseDate: movie.releaseDate,
+  //  runtime: movie.runtime,
+  //  voteAverage: movie.voteAverage,
+  //  voteCount: movie.voteCount,
+    ),
+  );
                         },
                       ),
                     );
