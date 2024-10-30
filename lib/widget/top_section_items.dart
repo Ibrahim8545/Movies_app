@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesapp/models/top_section_home_screen_model.dart';
+import 'package:moviesapp/utils/shimmer.dart';
 import 'package:moviesapp/widget/custom_icon_button.dart'; // Ensure this path is correct
 
 class TopSectioScreen extends StatelessWidget {
@@ -30,7 +31,7 @@ class TopSectioScreen extends StatelessWidget {
                 result.posterPath != null
     ? "https://image.tmdb.org/t/p/original/${result.posterPath}"
     : 'https://example.com/placeholder.png', // Placeholder URL if imagePath is null
-  placeholder: (context, url) => CircularProgressIndicator(),
+  placeholder: (context, url) => BuildShimmer(),
  errorWidget: (context, url, error) => Image.asset('assets/images/nophoto.png'),
               ),
               SizedBox(width: 7),
